@@ -710,10 +710,10 @@ fn set_coverage_env(work_dir: &Path, clean: bool) {
         if line.starts_with("export ") {
             let env_var = &line[7..]; // Skip "export "
             if let Some((key, value)) = env_var.split_once('=') {
-                let mut value = value.trim_matches('\'').to_string();
-                if key == "RUSTFLAGS" {
-                    value += " -Z coverage-options=branch";
-                }
+                let value = value.trim_matches('\'').to_string();
+                // if key == "RUSTFLAGS" {
+                //     value += " -Z coverage-options=branch";
+                // }
                 info!("export {}={}", key, value);
                 env::set_var(key, value);
             }
@@ -937,7 +937,7 @@ fn get_coverage(config: &Config) {
             "llvm-cov",
             "report",
             "--ignore-filename-regex=test_|replay_",
-            "--branch",
+            // "--branch",
             "--cobertura",
             "--output-path",
             covfile.to_str().unwrap(),
@@ -960,7 +960,7 @@ fn get_coverage(config: &Config) {
             "llvm-cov",
             "report",
             "--ignore-filename-regex=test_|replay_",
-            "--branch",
+            // "--branch",
             "--json",
             "--output-path",
             covfile.to_str().unwrap(),
